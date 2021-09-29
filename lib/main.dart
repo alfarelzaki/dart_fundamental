@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 main() {
@@ -5,30 +6,72 @@ main() {
 }
 
 class MyApp extends StatelessWidget {
-  final List<Color> colorList = [
-    Colors.red,
-    Colors.blue,
-    Colors.green,
-    Colors.amber
-  ];
-
-  final List<Widget> myList = List.generate(
-      100,
-      (index) => Text(
-            "${index + 1}",
-            style: TextStyle(fontSize: 20 + double.parse(index.toString())),
-          )
-  );
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        appBar: AppBar(title: Text("ListView")),
+        appBar: AppBar(title: Text("List Tile")),
         body: ListView(
-          children: myList,
-        )
+          children: const [
+            ListTile(
+              contentPadding:
+                  EdgeInsets.symmetric(vertical: 8, horizontal: 24),
+              leading: CircleAvatar(),
+              title: Text("Alfarel Zaki"),
+              subtitle: Text(
+                "Hey yo whats up! Wanna hang out?",
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
+              trailing: Text("18:23 PM"),
+              // tileColor: Colors.amber,
+              // dense: true,
+              // onTap: () {
+
+              // },
+            ),
+            Divider(color: Colors.black),
+            ListTile(
+              contentPadding:
+                  EdgeInsets.symmetric(vertical: 8, horizontal: 24),
+              leading: CircleAvatar(),
+              title: Text("Alfarel Zaki"),
+              subtitle: Text(
+                "Hey yo whats up! Wanna hang out?",
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
+              trailing: Text("18:23 PM"),
+              // tileColor: Colors.amber,
+              // dense: true,
+              // onTap: () {
+
+              // },
+            ),
+            Divider(color: Colors.black),
+            ListTile(
+              contentPadding:
+                  EdgeInsets.symmetric(vertical: 8, horizontal: 24),
+              leading: CircleAvatar(),
+              title: Text("Alfarel Zaki"),
+              subtitle: Text(
+                "Hey yo whats up! Wanna hang out?",
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
+              trailing: Text("18:23 PM"),
+              // tileColor: Colors.amber,
+              // dense: true,
+              // onTap: () {
+
+              // },
+            ),
+            Divider(color: Colors.black),
+          ],
+        ),
       ),
     );
   }
