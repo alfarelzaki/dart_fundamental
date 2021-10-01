@@ -1,3 +1,4 @@
+import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
 
 main() {
@@ -5,7 +6,7 @@ main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({ Key? key }) : super(key: key);
+  var faker = new Faker();
 
   @override
   Widget build(BuildContext context) {
@@ -14,20 +15,38 @@ class MyApp extends StatelessWidget {
         appBar: AppBar(
           title: Text("Image View"),
         ),
-        body: Center(
-          child: Container(
-            width: 350,
-            height: 500,
-            color: Colors.amber,
-            child: Image.network("https://picsum.photos/200")
-            // child: Image(
-            //   image: AssetImage("images/cat.jpg"),
-            //   image: NetworkImage("https://picsum.photos/200/300"),
-            //   fit: BoxFit.cover,
-            // ),
-          ),
-        ),
-      )
+        body: ListView.builder(
+          itemCount: 20,
+          itemBuilder: (context, index) {
+          return ChatItem(
+              imageUrl: "https://picsum.photos/id/${index}/200/300",
+              name: faker.person.name(),
+              message: faker.lorem.sentence(),
+            );
+        })
+      ),
+    );
+  }
+}
+
+class ChatItem extends StatelessWidget {
+  final String imageUrl;
+  final String name;
+  final String message;
+
+  ChatItem({
+    required this.imageUrl, required this.name, required this.message
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      leading: CircleAvatar(
+        backgroundImage: NetworkImage(imageUrl),
+      ),
+      title: Text(name),
+      subtitle: Text(message),
+      trailing: Text("4:00 PM"),
     );
   }
 }
