@@ -5,48 +5,61 @@ main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
-  var faker = new Faker();
-
+class MyApp extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp (
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text("Image View"),
-        ),
-        body: ListView.builder(
-          itemCount: 20,
-          itemBuilder: (context, index) {
-          return ChatItem(
-              imageUrl: "https://picsum.photos/id/${index}/200/300",
-              name: faker.person.name(),
-              message: faker.lorem.sentence(),
-            );
-        })
-      ),
-    );
-  }
+  State<MyApp> createState() => _MyAppState();
 }
 
-class ChatItem extends StatelessWidget {
-  final String imageUrl;
-  final String name;
-  final String message;
-
-  ChatItem({
-    required this.imageUrl, required this.name, required this.message
-  });
+class _MyAppState extends State<MyApp> {
+  int counter = 1;
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      leading: CircleAvatar(
-        backgroundImage: NetworkImage(imageUrl),
-      ),
-      title: Text(name),
-      subtitle: Text(message),
-      trailing: Text("4:00 PM"),
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text("Dynamic App")
+        ,),
+
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Text(
+              counter.toString(),
+              style: TextStyle(fontSize: 50 + double.parse(counter.toString())),
+            ),
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    if (counter > 1) {
+                      setState(() {
+                        counter--;  
+                      });
+                      
+                      print(counter);
+                    }
+                  },
+                  child: Icon(Icons.remove),
+                ),
+
+                ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      counter++;  
+                    });
+                    
+                    print(counter);
+                  },
+                  child: Icon(Icons.add),
+                ),
+              ],
+            )
+          ],
+        )
+      ,)
     );
   }
 }
