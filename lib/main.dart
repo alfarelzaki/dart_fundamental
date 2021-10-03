@@ -8,55 +8,85 @@ main() {
 }
 
 class MyApp extends StatelessWidget {
+  List<Tab> myTab = [
+    Tab(
+      text: "Tab 1",
+      icon: Icon(Icons.icecream),
+    ),
+    Tab(
+      text: "Tab 2",
+      icon: Icon(Icons.local_pizza),
+    ),
+    Tab(
+      text: "Tab 3",
+      icon: Icon(Icons.rice_bowl),
+    ),
+  ];
+
+  List<Widget> myTabView = [
+    Center(
+      child: Text(
+        "Tab 1",
+        style: TextStyle(fontSize: 50),
+      ),
+    ),
+
+    Center(
+      child: Text(
+        "Tab 2",
+        style: TextStyle(fontSize: 50),
+      ),
+    ),
+
+    Center(
+      child: Text(
+        "Tab 3",
+        style: TextStyle(fontSize: 50),
+      ),
+    ),
+  ];
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        appBar: AppBar(
-          leading: Container(
-            color: Colors.green,
-            width: 100,
-          ),
+      home: DefaultTabController(
+        length: myTab.length,
+        child: Scaffold(
+          appBar: AppBar(
+            backgroundColor: Colors.orange[900],
+            title: Text("Tab App"),
+            bottom: TabBar(
+              labelColor: Colors.black,
+              unselectedLabelColor: Colors.white,
+              labelStyle: TextStyle(
+                fontWeight: FontWeight.bold
+              ),
+              unselectedLabelStyle: TextStyle(
+                fontWeight: FontWeight.normal
+              ),
 
-          title: Container(
-            color: Colors.blue,
-            // width: 100,
-            height: 25
-          ),
-          // titleSpacing: 0,
+              // indicatorColor: Colors.black,
+              // indicatorPadding: EdgeInsets.all(8),
+              // indicatorWeight: 5,
 
-          actions: [
-            Container(
-            color: Colors.amber,
-            width: 40,
-          ),
-          Container(
-            color: Colors.orange,
-            width: 40,
-          ),
-          Container(
-            color: Colors.amber,
-            width: 40,
-          )
-          ],
-
-          bottom: PreferredSize(
-            preferredSize: Size.fromHeight(500),
-            child: Container(
-              color: Colors.pink,
-              width: 50,
-              height: 400,
+              indicator: BoxDecoration(
+                color: Colors.orange[400],
+                // borderRadius: BorderRadius.circular(64)
+                border: Border(
+                  bottom: BorderSide(
+                    color: Colors.black,
+                    width: 5
+                  )
+                )
+              ),
+              tabs: myTab
             ),
           ),
 
-          flexibleSpace: Container(
-            color: Colors.purple,
-            height: 300,
-          ),
+          body: TabBarView(children: myTabView,),
         ),
-      )
+      ),
     );
   }
 }
