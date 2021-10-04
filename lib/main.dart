@@ -7,54 +7,50 @@ main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  final TextEditingController myController = TextEditingController();
+  String data = "hasil input";
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: Text("TextField App"),
+          title: Text("Text field usage"),
         ),
         body: Center(
           child: Padding(
             padding: const EdgeInsets.all(24.0),
-            child: TextField(
-              showCursor: true,
-              cursorColor: Colors.green,
-              // cursorHeight: 24,
-              // cursorWidth: 12,
-              // cursorRadius: Radius.circular(20),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly, 
+              children: [
+                TextField(
+                  controller: myController,
 
-              textAlign: TextAlign.start,
-              textAlignVertical: TextAlignVertical.center,
-              textCapitalization: TextCapitalization.none,
+                  onChanged: (value) {
+                    print("onchanged: ${value}");
+                  },
 
-              obscureText: true,
+                  onSubmitted: (value) {
+                    print("onsubmitted: ${value}");
 
-              style: TextStyle(fontSize: 16, color: Colors.green),
+                    setState(() {
+                      data = value;
+                    });
+                  },
 
-              decoration: InputDecoration(
-                icon: Icon(
-                  Icons.person,
-                  size: 24,
+                  onEditingComplete: () {
+                    print("edit success");
+                  },
                 ),
 
-                border: OutlineInputBorder(),
-
-                prefixIcon: Icon(Icons.add_a_photo),
-                suffixIcon: IconButton(
-                  icon: Icon(Icons.remove_red_eye),
-                  onPressed: () {},
-                ),
-
-                // prefixText: "Name: ",
-
-                hintText: "Masukkan nama anda",
-                hintStyle: TextStyle(color: Colors.green, fontSize: 16),
-
-                labelText: "Nama lengkap",
-                labelStyle: TextStyle(color: Colors.black),
-              ),
+                Text(data)
+              ],
             ),
           ),
         ),
