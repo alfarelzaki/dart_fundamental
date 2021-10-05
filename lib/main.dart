@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:faker/faker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -7,54 +9,44 @@ main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatefulWidget {
-  @override
-  State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  final TextEditingController myController = TextEditingController();
-  String data = "hasil input";
+class MyApp extends StatelessWidget {
+  List<Container> myList = List.generate(60, (index) {
+    return Container(
+      height: 50,
+      width: 150,
+      color: Color.fromARGB(
+        255,
+        Random().nextInt(256),
+        Random().nextInt(256),
+        Random().nextInt(256)
+      ),
+    );
+  });
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text("Text field usage"),
-        ),
-        body: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(24.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly, 
-              children: [
-                TextField(
-                  controller: myController,
+        home: Scaffold(
+      appBar: AppBar(title: Text("Grid View")),
+      // body: GridView(
+      //   padding: EdgeInsets.all(16),
+      //   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+      //     crossAxisCount: 3,
+      //     crossAxisSpacing: 16,
+      //     mainAxisSpacing: 16,
+      //     childAspectRatio: 1.0
+      //   ),
+      //   children: myList,
+      // ),
 
-                  onChanged: (value) {
-                    print("onchanged: ${value}");
-                  },
-
-                  onSubmitted: (value) {
-                    print("onsubmitted: ${value}");
-
-                    setState(() {
-                      data = value;
-                    });
-                  },
-
-                  onEditingComplete: () {
-                    print("edit success");
-                  },
-                ),
-
-                Text(data)
-              ],
-            ),
-          ),
-        ),
+      body: GridView.count(
+        padding: EdgeInsets.all(16),
+        crossAxisCount: 3,
+        crossAxisSpacing: 16,
+        mainAxisSpacing: 16,
+        childAspectRatio: 4/3,
+        children: myList,
       ),
-    );
+    ));
   }
 }
