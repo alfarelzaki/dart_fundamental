@@ -9,17 +9,53 @@ main() {
 }
 
 class MyApp extends StatelessWidget {
-  
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: HomePage(),
-      initialRoute: HomePage.routeName,
-      routes: {
-        HomePage.routeName: (context) => HomePage(),
-        GalleryPage.routeName: (context) => GalleryPage(),
-        PhotoPage.routeName: (context) => PhotoPage(),
-      },
+    );
+  }
+}
+
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
+
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  bool switchStatus = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text("Switch")),
+      body: Center(
+        child: Column(
+          children: [
+            Switch(
+              activeColor: Colors.green,
+              inactiveThumbColor: Colors.red,
+              inactiveTrackColor: Colors.red[100],
+
+              value: switchStatus,
+              onChanged: (value) {
+                setState(() {
+                  switchStatus = !switchStatus;
+                });
+              },
+            ),
+            
+            Text(
+              (switchStatus == true) ? "Switch on" : "Switch off",
+              style: TextStyle(
+                fontSize: 32,
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
