@@ -1,7 +1,17 @@
+import 'dart:math';
+
 import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 main() {
+  // make device orientation potrait only
+
+  // WidgetsFlutterBinding.ensureInitialized();
+  // SystemChrome.setPreferredOrientations([
+  //   DeviceOrientation.portraitUp,
+  // ]);
+
   runApp(MyApp());
 }
 
@@ -9,76 +19,84 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: HomePage(),
-        theme: ThemeData(
-          brightness: Brightness.light,
-          // visualDensity: VisualDensity.comfortable,
-          visualDensity: VisualDensity(horizontal: 3, vertical: 1),
-          primarySwatch: Colors.green,
-          textTheme: TextTheme(
-            bodyText2: TextStyle(
-              color: Colors.blue,
-              fontFamily: "RobotoMono",
-            ),
-          ),
-
-          appBarTheme: AppBarTheme(
-            color: Colors.red,
-            titleTextStyle: TextStyle(
-              color: Colors.black,
-              fontFamily: "RobotoMono",
-            )
-          )
-        ));
+      debugShowCheckedModeBanner: false,
+      home: HomePage(),
+    );
   }
 }
 
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final mediaQueryHeight = MediaQuery.of(context).size.height;
+    final mediaQueryWidth = MediaQuery.of(context).size.width;
+    final myAppBar = AppBar(
+      title: Text("Media Query"),
+    );
+
+    final mediaQueryBody = mediaQueryHeight -
+        myAppBar.preferredSize.height -
+        MediaQuery.of(context).padding.top;
+
+    final isLandscape =
+        (MediaQuery.of(context).orientation == Orientation.landscape);
+
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "Theme",
-        ),
-      ),
+      appBar: myAppBar,
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              "this is a text",
-              style: TextStyle(
-                fontSize: 24,
+        child: (isLandscape)
+            ? Column(
+                children: [
+                  Container(
+                    width: mediaQueryWidth,
+                    height: mediaQueryBody * 0.5,
+                    color: Colors.amber,
+                  ),
+                  Container(
+                    width: mediaQueryWidth,
+                    height: mediaQueryBody * 0.5,
+                    child: GridView.builder(
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 4,
+                          mainAxisSpacing: 16,
+                          crossAxisSpacing: 16,
+                        ),
+                        itemCount: 20,
+                        itemBuilder: (context, index) {
+                          return GridTile(
+                            child: Container(
+                              color: Color.fromARGB(255, Random().nextInt(256),
+                                  Random().nextInt(256), Random().nextInt(256)),
+                            ),
+                          );
+                        }),
+                  ),
+                ],
+              )
+            : Column(
+                children: [
+                  Container(
+                    width: mediaQueryWidth,
+                    height: mediaQueryBody * 0.3,
+                    color: Colors.amber,
+                  ),
+                  Container(
+                    width: mediaQueryWidth,
+                    height: mediaQueryBody * 0.7,
+                    child: ListView.builder(
+                        itemCount: 20,
+                        itemBuilder: (context, index) {
+                          return ListTile(
+                            leading: CircleAvatar(
+                              backgroundColor: Colors.green,
+                            ),
+                            title: Text("Halo semua"),
+                          );
+                        }),
+                  ),
+                ],
               ),
-            ),
-            SizedBox(
-              height: 24,
-            ),
-            Text(
-              "this is a text",
-              style: TextStyle(
-                fontSize: 24,
-              ),
-            ),
-            SizedBox(
-              height: 24,
-            ),
-            ElevatedButton(
-              onPressed: () {},
-              child: Text(
-                "Button",
-                style: TextStyle(
-                  fontSize: 24,
-                ),
-              ),
-            ),
-          ],
-        ),
       ),
-      floatingActionButton:
-          FloatingActionButton(onPressed: () {}, child: Icon(Icons.star)),
     );
   }
 }
