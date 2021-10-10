@@ -32,39 +32,16 @@ class HomePage extends StatelessWidget {
         appBar: AppBar(
           title: Text("flexible and expanded"),
         ),
-        body: Column(
-          children: [
-            Expanded(
-              flex: 3,
-              child: Row(
-                children: [
-                  Flexible(
-                    fit: FlexFit.tight,
-                    child: Container(
-                      color: Colors.red,
-                    ),
-                  ),
-                  Expanded(
-                    child: Container(
-                      color: Colors.green,
-                    ),
-                  ),
-                  Flexible(
-                    fit: FlexFit.tight,
-                    child: Container(
-                      color: Colors.blue,
-                    ),
-                  ),
-                ],
-              ),
+        body: Center(
+          child: Container(
+            color: Colors.amber,
+            height: 150,
+            width: 300,
+            child: FittedBox(
+              alignment: Alignment.centerRight,
+              child: Image.network("https://picsum.photos/200/300"),
             ),
-            Expanded(
-              flex: 7,
-              child: Container(
-                color: Colors.amber,
-              ),
-            )
-          ],
+          ),
         ));
   }
 }
