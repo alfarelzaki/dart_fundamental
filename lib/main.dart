@@ -28,75 +28,43 @@ class MyApp extends StatelessWidget {
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final mediaQueryHeight = MediaQuery.of(context).size.height;
-    final mediaQueryWidth = MediaQuery.of(context).size.width;
-    final myAppBar = AppBar(
-      title: Text("Media Query"),
-    );
-
-    final mediaQueryBody = mediaQueryHeight -
-        myAppBar.preferredSize.height -
-        MediaQuery.of(context).padding.top;
-
-    final isLandscape =
-        (MediaQuery.of(context).orientation == Orientation.landscape);
-
     return Scaffold(
-      appBar: myAppBar,
-      body: Center(
-        child: (isLandscape)
-            ? Column(
+        appBar: AppBar(
+          title: Text("flexible and expanded"),
+        ),
+        body: Column(
+          children: [
+            Expanded(
+              flex: 3,
+              child: Row(
                 children: [
-                  Container(
-                    width: mediaQueryWidth,
-                    height: mediaQueryBody * 0.5,
-                    color: Colors.amber,
+                  Flexible(
+                    fit: FlexFit.tight,
+                    child: Container(
+                      color: Colors.red,
+                    ),
                   ),
-                  Container(
-                    width: mediaQueryWidth,
-                    height: mediaQueryBody * 0.5,
-                    child: GridView.builder(
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 4,
-                          mainAxisSpacing: 16,
-                          crossAxisSpacing: 16,
-                        ),
-                        itemCount: 20,
-                        itemBuilder: (context, index) {
-                          return GridTile(
-                            child: Container(
-                              color: Color.fromARGB(255, Random().nextInt(256),
-                                  Random().nextInt(256), Random().nextInt(256)),
-                            ),
-                          );
-                        }),
+                  Expanded(
+                    child: Container(
+                      color: Colors.green,
+                    ),
                   ),
-                ],
-              )
-            : Column(
-                children: [
-                  Container(
-                    width: mediaQueryWidth,
-                    height: mediaQueryBody * 0.3,
-                    color: Colors.amber,
-                  ),
-                  Container(
-                    width: mediaQueryWidth,
-                    height: mediaQueryBody * 0.7,
-                    child: ListView.builder(
-                        itemCount: 20,
-                        itemBuilder: (context, index) {
-                          return ListTile(
-                            leading: CircleAvatar(
-                              backgroundColor: Colors.green,
-                            ),
-                            title: Text("Halo semua"),
-                          );
-                        }),
+                  Flexible(
+                    fit: FlexFit.tight,
+                    child: Container(
+                      color: Colors.blue,
+                    ),
                   ),
                 ],
               ),
-      ),
-    );
+            ),
+            Expanded(
+              flex: 7,
+              child: Container(
+                color: Colors.amber,
+              ),
+            )
+          ],
+        ));
   }
 }
