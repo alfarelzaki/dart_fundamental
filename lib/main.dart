@@ -1,8 +1,11 @@
 import 'dart:math';
 
 import 'package:faker/faker.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+import 'dart:io';
 
 main() {
   // make device orientation potrait only
@@ -28,48 +31,55 @@ class MyApp extends StatelessWidget {
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final widthApp = MediaQuery.of(context).size.width;
-    final heightApp = MediaQuery.of(context).size.height;
-    final paddingTop = MediaQuery.of(context).padding.top;
-
-    final myAppBar = AppBar(title: Text("flexible and expanded"));
-
-    final heightBody = heightApp - paddingTop - myAppBar.preferredSize.height;
-
     return Scaffold(
-      appBar: myAppBar,
-      body: Container(
-        color: Colors.amber,
-        height: heightBody * 0.3,
-        width: widthApp,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            MyContainer(widthApp),
-            MyContainer(widthApp),
-            MyContainer(widthApp),
-          ],
+        appBar: AppBar(
+          title: Text(
+            "Cupertino design",
+          ),
         ),
-      ),
-    );
-  }
-}
-
-class MyContainer extends StatelessWidget {
-  final double widthApp;
-
-  MyContainer(this.widthApp);
-
-  @override
-  Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        return Container(
-          height: constraints.maxHeight * 0.5,
-          width: widthApp * 0.3,
-          color: Colors.red,
-        );
-      },
-    );
+        body: Center(
+          child: ElevatedButton(
+            onPressed: () {
+              showDialog(
+                  context: context,
+                  builder: (context) {
+                    return Platform.isIOS
+                        ? CupertinoAlertDialog(
+                            title: Text("Delete item"),
+                            content: Text(
+                              "Are you sure you want to delete this item?",
+                            ),
+                            actions: [
+                              TextButton(
+                                onPressed: () {},
+                                child: Text("No"),
+                              ),
+                              TextButton(
+                                onPressed: () {},
+                                child: Text("Yes"),
+                              ),
+                            ],
+                          )
+                        : AlertDialog(
+                            title: Text("Delete item"),
+                            content: Text(
+                              "Are you sure you want to delete this item?",
+                            ),
+                            actions: [
+                              TextButton(
+                                onPressed: () {},
+                                child: Text("No"),
+                              ),
+                              TextButton(
+                                onPressed: () {},
+                                child: Text("Yes"),
+                              ),
+                            ],
+                          );
+                  });
+            },
+            child: Text("Alert dialog"),
+          ),
+        ));
   }
 }
