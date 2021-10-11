@@ -28,20 +28,48 @@ class MyApp extends StatelessWidget {
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final widthApp = MediaQuery.of(context).size.width;
+    final heightApp = MediaQuery.of(context).size.height;
+    final paddingTop = MediaQuery.of(context).padding.top;
+
+    final myAppBar = AppBar(title: Text("flexible and expanded"));
+
+    final heightBody = heightApp - paddingTop - myAppBar.preferredSize.height;
+
     return Scaffold(
-        appBar: AppBar(
-          title: Text("flexible and expanded"),
+      appBar: myAppBar,
+      body: Container(
+        color: Colors.amber,
+        height: heightBody * 0.3,
+        width: widthApp,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            MyContainer(widthApp),
+            MyContainer(widthApp),
+            MyContainer(widthApp),
+          ],
         ),
-        body: Center(
-          child: Container(
-            color: Colors.amber,
-            height: 150,
-            width: 300,
-            child: FittedBox(
-              alignment: Alignment.centerRight,
-              child: Image.network("https://picsum.photos/200/300"),
-            ),
-          ),
-        ));
+      ),
+    );
+  }
+}
+
+class MyContainer extends StatelessWidget {
+  final double widthApp;
+
+  MyContainer(this.widthApp);
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return Container(
+          height: constraints.maxHeight * 0.5,
+          width: widthApp * 0.3,
+          color: Colors.red,
+        );
+      },
+    );
   }
 }
