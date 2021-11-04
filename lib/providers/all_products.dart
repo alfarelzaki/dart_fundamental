@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:new_flutter/models/product.dart';
+import './product.dart';
 import 'dart:math';
 
 class Products with ChangeNotifier {
